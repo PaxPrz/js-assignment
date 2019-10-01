@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My Bio</title>
+    <style>
+      table{
+        width: 80%;
+        margin: 10px auto;
+        border: 1px solid black;
+      }
+      table tr td{
+        border: 1px solid gray;
+        padding: 5px;
+      }
+      .define{
+        text-transform: capitalize;
+        font-weight: bold;
+      }
+    </style>
 </head>
 <body>
         <div id="mybio" style="padding-bottom: 20px"></div>
@@ -13,24 +28,50 @@
         var mybio={
             name : "Prakash R. Prajapati",
             address : "Bhaktapur",
+            email: "prakashratnaprajapati@gmail.com",
             education: {
                 "SLC": {institution: 'Jaycees Secondary School', year_of_completion : '2069 BS'},
                 "+2": {institution: 'CCRC', year_of_completion : '2072 BS'},
                 "Bachelors": {institution: 'Kantipur Engineering College', year_of_completion : '2076 BS'}
             },
-            intrests: ["Football", "Computer Games"],
+            intrests: ["Football", "Computer Games", "Programming"],
             job: "Intern at Leapfrog",
         }
         console.log(mybio);
-        document.getElementById('mybio').innerHTML = JSON.stringify(mybio);
         
-        /* JS createElement */
-        var newElement = document.createElement('p');
-        newElement.setAttribute('class', 'name');
-        newElement.innerHTML = 'Name: John';
-        document.body.appendChild(newElement);
+        function makebio(bio){
+          var table = document.createElement('table');
+          for(var data in bio){
+            var tr = document.createElement('tr');
+            var td1 = document.createElement('td');
+            td1.setAttribute('class', 'define');
+            td1.innerHTML = data.toString();
+            var bioIn = bio[data];
+            var td2 = document.createElement('td');
+            if(typeof(bioIn) == 'object' && !Array.isArray(bioIn)){
+              var ele = makebio(bioIn);
+              td2.appendChild(ele);
+            }else{
+              if(Array.isArray(bioIn)){
+                for(var i=0; i<bioIn.length; i++){
+                  td2.innerHTML += bioIn[i]+'<br/>';
+                }
+              }
+              else{
+                td2.innerHTML = bioIn.toString();
+              }
+            }
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            table.appendChild(tr);
+          }
+          return table;
+        }
+        
+        bioForHTML = makebio(mybio);
+        document.body.appendChild(bioForHTML);
 
-
+        //Star drawing
         var output = '';
         var lines = 5;
         for (var i=lines; i>0; i--){
