@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="red green">
+        Hello world
+    </div>
+    <div id="nextbox" class="red green">
+        something is repeated
+        <span>This is a content inside span</span>
+    </div>
+    <div class="green">
+        something has been done in green.
+    </div>
+    <div id="clicker" class="red" style="width: 100px; height: 100px; background-color: red;">
+
+    </div>
+
+    <script>
+        var boxes = document.getElementsByClassName('red green');
+        console.log(boxes);
+        console.log(typeof boxes);
+        for (var i=0; i<boxes.length; i++){
+            console.log(boxes[i].children);
+        }
+        console.log(document.querySelector('#nextbox span'));
+
+        var clicker = document.getElementById('clicker');
+        clicker.onmouseenter = function(e){
+            clicker.style.backgroundColor="#000";
+        }
+        clicker.onmouseleave = function(e){
+            clicker.style.backgroundColor='#f00';
+        }
+    </script>
+</body>
+</html>

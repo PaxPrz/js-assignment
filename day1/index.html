@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Bio</title>
+</head>
+<body>
+        <div id="mybio" style="padding-bottom: 20px"></div>
+        <div id="star"></div>
+    <script>
+        var mybio={
+            name : "Prakash R. Prajapati",
+            address : "Bhaktapur",
+            education: {
+                "SLC": {institution: 'Jaycees Secondary School', year_of_completion : '2069 BS'},
+                "+2": {institution: 'CCRC', year_of_completion : '2072 BS'},
+                "Bachelors": {institution: 'Kantipur Engineering College', year_of_completion : '2076 BS'}
+            },
+            intrests: ["Football", "Computer Games"],
+            job: "Intern at Leapfrog",
+        }
+        console.log(mybio);
+        document.getElementById('mybio').innerHTML = JSON.stringify(mybio);
+        
+        /* JS createElement */
+        var newElement = document.createElement('p');
+        newElement.setAttribute('class', 'name');
+        newElement.innerHTML = 'Name: John';
+        document.body.appendChild(newElement);
+
+
+        var output = '';
+        var lines = 5;
+        for (var i=lines; i>0; i--){
+            var consoleoutput = '';
+            for (var j=i; j>0; j--){
+                output += '* ';
+                consoleoutput+='* ';
+            }
+            output += '<br/>';
+            console.log(consoleoutput);
+        }
+        document.getElementById('star').innerHTML = output;
+    </script>
+</body>
+</html>
