@@ -42,7 +42,7 @@ function transform(collection, transFunc){
     return collection;
 }
 
-var output = transform(numbers, function(num){
+var output_functions = transform(numbers, function(num){
     return num*2;
 });
 
