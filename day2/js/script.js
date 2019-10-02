@@ -98,8 +98,8 @@ function Normalize(input){
     function normalize(inp){
         if(inp.hasOwnProperty('children')){
             for(var j=0; j<inp.children.length; j++){
-            normalize(inp.children[j]);
-            inp.children[j]= inp.children[j].id;
+                normalize(inp.children[j]);
+                inp.children[j]= inp.children[j].id;
             }
         }
         output[inp.id.toString()] = inp;
