@@ -96,18 +96,18 @@ function Normalize(input){
     output={};
 
     function normalize(inp){
-    if(inp.hasOwnProperty('children')){
-        for(var j=0; j<inp.children.length; j++){
-        normalize(inp.children[j]);
-        inp.children[j]= inp.children[j].id;
+        if(inp.hasOwnProperty('children')){
+            for(var j=0; j<inp.children.length; j++){
+            normalize(inp.children[j]);
+            inp.children[j]= inp.children[j].id;
+            }
         }
-    }
-    output[inp.id.toString()] = inp;
+        output[inp.id.toString()] = inp;
     }
 
     var keys = Object.keys(input);
     for(var i=0; i<keys.length; i++){
-    normalize(input[keys[i]]);
+        normalize(input[keys[i]]);
     }
     return output;
 }
