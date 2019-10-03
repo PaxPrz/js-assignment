@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    margin-left: 10%;
+}
+
+.container{
+    overflow: hidden;
+    width: 90%;
+    background-color: yellow;
+}
+
+.wrapper{
+    position: relative;
+    background-color: gray;
+    left: 0px;
+}
+
+.carousel_img{
+    /* width: 100%; */
+}
+
+.wrapper img{
+    left: 0px;
+    position: relative;
+    float:left;
+}
+
+.activeStar{
+    text-transform: uppercase;
+}
+
