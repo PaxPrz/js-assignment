@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button id="1" car="100" onClick="reply_click(this.car)">B1</button>
+<button id="2" carouselIndex="200" onClick="reply_click(100, this.id)">B2</button>
+<button id="3" carouselIndex="300" onClick="reply_click(this.id)">B3</button>
+    
+<img src="./images/1.jpg" alt="" class="" style="width: 400px;">
+<script type="text/javascript">
+  function reply_click(clicked_id)
+  {
+      alert(clicked_id);
+  }
+  console.log(window.screen.width);
+</script>
+</body>
+</html>
