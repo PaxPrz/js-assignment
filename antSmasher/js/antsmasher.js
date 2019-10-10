@@ -27,22 +27,25 @@ class Ant{
     }
 
     create(){
-        this.box = document.createElement('img');
-        this.box.style.width = this.length+'px';
-        this.box.style.height = this.length+'px';
-        this.box.src = '../images/ant.gif';
-        // this.box.style.backgroundImage = '../images/ant.gif';
-        this.box.style.position = 'absolute';
-        this.box.style.left = this.posX + 'px';
-        this.box.style.top = this.posY + 'px';
-        this.box.style.transform = `rotate(${this.degree}deg)`;
-        this.box.onclick = function(){
-            console.log('clicked');
-            this.stopIt();
-        }.bind(this);
-        // this.box.style.transformOrigin = '0 0';
-        // this.box.style.border = '1px solid black';
-        body.appendChild(this.box);
+        // this.box = document.createElement('img');
+        this.box = new Image();
+        this.box.src = 'https://github.com/PaxPrz/js-assignment/blob/gh-pages/antSmasher/images/ant.gif?raw=true';
+        this.box.onload = ()=>{
+            this.box.style.width = this.length+'px';
+            this.box.style.height = this.length+'px';
+            this.box.style.position = 'absolute';
+            this.box.style.left = this.posX + 'px';
+            this.box.style.top = this.posY + 'px';
+            this.box.style.transform = `rotate(${this.degree}deg)`;
+            this.box.onclick = function(){
+                AntGame.score++;
+                console.log('Score: ', AntGame.score);
+                this.stopIt();
+            }.bind(this);
+            body.appendChild(this.box);
+        }
+        this.squashed = new Image();
+        this.squashed.src = 'https://github.com/PaxPrz/js-assignment/blob/gh-pages/antSmasher/images/antkilled.png?raw=true';
     }
 
     move(){
@@ -89,7 +92,7 @@ class Ant{
     stopIt(){
         clearInterval(this.updater);
         clearInterval(this.changeDirection);
-        this.box.src = '../images/antkilled.png';
+        this.box.src = 'https://github.com/PaxPrz/js-assignment/blob/gh-pages/antSmasher/images/antkilled.png?raw=true';
     }
 }
 
@@ -154,6 +157,7 @@ class AntGame{
 
 AntGame.OFFSET = 20;
 AntGame.GAME_SPEED = 4;
+AntGame.score = 0;
 
 var game = new AntGame(10);
 
