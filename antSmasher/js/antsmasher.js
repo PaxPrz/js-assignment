@@ -124,6 +124,9 @@ class AntGame{
             // let boxRight = (this.boxes[i].posX + tanAngleValue + this.boxes[i].length);
             // let boxTop = (this.boxes[i].posY - tanAngleValue);
             // let boxBottom = (this.boxes[i].posY + tanAngleValue + this.boxes[i].length);
+            if(this.ants[i].isKilled){
+                continue;
+            }
 
             if((this.ants[i].posX <= AntGame.OFFSET && this.ants[i].dx<0) || ((this.ants[i].posX >= AntGame.getGameWidth()-AntGame.OFFSET) && this.ants[i].dx>0)){
                 this.ants[i].dx = -this.ants[i].dx;
