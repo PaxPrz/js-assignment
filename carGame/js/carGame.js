@@ -150,7 +150,7 @@ class CarGame{
         this.hitCheck = setInterval(()=>{
             for(var i=0; i<this.cars.length; i++){
                 if(this.cars[i].posY>=350){
-                    console.log('hit');
+                    // console.log('hit');
                     if(this.mycar.lane == this.cars[i].lane){
                         clearInterval(this.backgroundMover);
                         clearInterval(this.lane0run);
@@ -213,7 +213,7 @@ function newGame(){
         gameContainer.removeChild(game.cars[i].car);
     }
     // delete(game);
-    console.log(game);
+    // console.log(game);
     gameContainer.removeChild(over);
     game = new CarGame();
 }

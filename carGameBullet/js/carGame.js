@@ -20,6 +20,8 @@ var highScore = 0;
 var highScoreValue = document.getElementById('highscore');
 var score = document.getElementById('score');
 
+var MAX_BULLET=2;
+
 class Car{
     constructor(lane, direction=-1){
         this.posX = leftLoc[lane];
@@ -62,12 +64,54 @@ class Car{
 
 }
 
+class Bullet{
+    constructor(lane){
+        this.lane = lane;
+        this.posY = 450;
+        this.posX = leftLoc[this.lane]+50;
+        this.drawBullet();
+        this.moveBullet();
+    }
+
+    drawBullet(){
+        this.bullet = document.createElement('h2');
+        this.bullet.innerText = '^';
+        this.bullet.style.width = '10px';
+        this.bullet.style.height = '20px';
+        this.bullet.style.position = 'absolute';
+        this.bullet.style.left = this.posX+'px';
+        this.bullet.style.top = this.posY+'px';
+        this.bullet.style.backgroundColor = '#f00';
+        this.bullet.style.zIndex=100;
+        this.bullet.style.display= 'block';
+        // this.bullet.style.borderRadius = '5px 5px 0px 0px';
+        this.bullet.style.border = '1px solid black';
+        gameContainer.appendChild(this.bullet);
+    }
+
+    moveBullet(){
+        this.bulletMover = setInterval(()=>{
+            this.posY -= 30;
+            this.bullet.style.top = this.posY+'px';
+        }, 10);
+    }
+
+    destroyBullet(){
+        clearInterval(this.bulletMover);
+        // console.log('bulletdestroy');
+        gameContainer.removeChild(this.bullet);
+    }
+}
+
 
 class CarGame{
     constructor(){
         this.gameOver = false;
         this.cars = [];
+        this.bullets = [];
+        this.singleBullet = null;
         this.backPos = 0;
+        this.bulletCounter = MAX_BULLET;
         gameContainer.style.backgroundPositionY = '0px';
         this.backgroundMover = setInterval(()=>{
             this.backPos += SPEED;
@@ -81,13 +125,19 @@ class CarGame{
         this.lane2();
 
         this.destroyCars();
+        this.destroyBullet();
 
         this.checkHit();
 
         this.scoreupdater = setInterval(()=>{
-            score.innerHTML = Math.floor(game.backPos);
+            score.innerHTML = Math.floor(this.backPos);
             SPEED += 0.03;
         },100);
+
+        this.createBulletBoard();
+
+        this.bulletRespwaner = null;
+        this.destroyBulletIndex = -1;
 
         document.addEventListener("keypress", (event)=>{
             var key = event.which || event.keyCode;
@@ -97,7 +147,20 @@ class CarGame{
             else if(key==100){
                 this.moveRight();
             }
+            else if(key==32){
+                this.shootBullet();
+            }
         });
+    }
+
+    createBulletBoard(){
+        this.bulletBoard = document.createElement('h1');
+        this.bulletBoard.style.position = 'absolute';
+        this.bulletBoard.style.backgroundColor = '#777';
+        this.bulletBoard.style.left = '400px';
+        this.bulletBoard.style.top = '20px';
+        this.bulletBoard.innerText = this.bulletCounter;
+        gameContainer.appendChild(this.bulletBoard);
     }
 
     lane0(){
@@ -123,11 +186,39 @@ class CarGame{
 
     destroyCars(){
         this.carDestroyer = setInterval(()=>{
+            var carIndex = -1;
             for(var i=0; i<this.cars.length; i++){
-                if(this.cars[i].posY>=500){
+                for(var j=0; j<this.bullets.length; j++){
+                    if(this.bullets[j].lane == this.cars[i].lane){
+                        if(this.bullets[j].posY<this.cars[i].posY){
+                            this.destroyBulletIndex = j;
+                            carIndex = i;
+                            break;
+                        }
+                    }
+                }
+                if(this.cars[i].posY>=500 || carIndex!=-1){
                     clearInterval(this.cars[i].move);
                     gameContainer.removeChild(this.cars[i].car);
                     this.cars.splice(i,1);
+                    break;
+                }
+            }
+        }, 20);
+    }
+
+    destroyBullet(){
+        this.bulletDestroyer = setInterval(()=>{
+            for(var i=0; i<this.bullets.length; i++){
+                if(i==this.destroyBulletIndex){
+                    this.destroyBulletIndex = -1;
+                    this.bullets[i].destroyBullet();
+                    this.bullets.splice(i,1);
+                    break;
+                }
+                if(this.bullets[i].posY<=0){
+                    this.bullets[i].destroyBullet();
+                    this.bullets.splice(i,1);
                     break;
                 }
             }
@@ -146,12 +237,36 @@ class CarGame{
         this.mycar.car.style.left = this.mycar.posX+'px';
     }
 
+    shootBullet(){
+        if(this.gameOver == false && this.bulletCounter>0){
+            console.log('shoot:', this.bulletCounter);
+            this.bullets.push(new Bullet(this.mycar.lane));
+            this.bulletCounter--;
+            // if(this.bulletRespwaner==null){
+            //     // this.bulletRespwaner = setInterval(()=>{
+            //     //     this.bulletCounter++;
+            //     //     this.bulletBoard.innerText = this.bulletCounter;
+            //     //     if(this.bulletCounter>=0){
+            //     //         clearInterval(this.bulletRespwaner);
+            //     //         this.bulletRespwaner = null;
+            //     //     }
+            //     // }, 3000);
+            // }
+            setTimeout(()=>{
+                this.bulletCounter++;
+                this.bulletBoard.innerText = this.bulletCounter;
+            }, 3000);
+            this.bulletBoard.innerText = this.bulletCounter;
+        }
+    }
+
     checkHit(){
         this.hitCheck = setInterval(()=>{
             for(var i=0; i<this.cars.length; i++){
                 if(this.cars[i].posY>=350){
-                    console.log('hit');
+                    // console.log('hit');
                     if(this.mycar.lane == this.cars[i].lane){
+                        this.gameOver = true;
                         clearInterval(this.backgroundMover);
                         clearInterval(this.lane0run);
                         clearInterval(this.lane1run);
@@ -209,11 +324,13 @@ function newGame(){
     clearTimeout(game.lane2ran);
 
     clearInterval(game.carDestroyer);
+    clearInterval(game.bulletDestroyer);
     for(var i=0; i<game.cars.length; i++){
         gameContainer.removeChild(game.cars[i].car);
     }
     // delete(game);
-    console.log(game);
+    // console.log(game);
+    gameContainer.removeChild(game.bulletBoard);
     gameContainer.removeChild(over);
     game = new CarGame();
 }
