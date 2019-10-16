@@ -30,3 +30,14 @@
     text-align: center;
     font-size: 10px;
 }
+
+#startgame{
+    width: 200px;
+    height: 100px;
+    padding: 30px;
+    text-align: center;
+    left: 120px;
+    top: 200px;
+    background-color: gray;
+    position: absolute;
+}

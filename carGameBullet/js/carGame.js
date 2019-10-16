@@ -18,6 +18,7 @@ var SPEED = 5;
 var highScore = 0;
 
 var highScoreValue = document.getElementById('highscore');
+var score = document.getElementById('score');
 
 class Car{
     constructor(lane, direction=-1){
@@ -78,9 +79,25 @@ class CarGame{
         this.lane0();
         this.lane1();
         this.lane2();
+
         this.destroyCars();
 
         this.checkHit();
+
+        this.scoreupdater = setInterval(()=>{
+            score.innerHTML = Math.floor(game.backPos);
+            SPEED += 0.03;
+        },100);
+
+        document.addEventListener("keypress", (event)=>{
+            var key = event.which || event.keyCode;
+            if(key==97){
+                this.moveLeft();
+            }
+            else if(key==100){
+                this.moveRight();
+            }
+        });
     }
 
     lane0(){
@@ -146,30 +163,58 @@ class CarGame{
                             highScore = Math.floor(game.backPos);
                             highScoreValue.innerHTML = highScore;
                         }
-                        clearInterval(scoreupdater);
+                        clearInterval(this.scoreupdater);
+                        gameOver();
                     }
                 }
             }
         }, 60);
     }
 
-
 }
 
-var game = new CarGame();
+function gameOver(){
+    console.log('GAMEOVER');
+    over = document.createElement('div');
+    over.style.width = '300px';
+    over.style.height = '100px';
+    over.style.position = 'absolute';
+    over.style.left = '100px';
+    over.style.top = '200px';
+    over.style.backgroundColor = '#777';
+    over.style.zIndex = 200;
+    over.style.padding = '30px 30px';
+    var h1 = document.createElement('h1');
+    h1.innerText = 'GAMEOVER';
+    h1.style.width = '300px';
+    h1.style.textAlign = 'center';
+    over.appendChild(h1);
+    var btn = document.createElement('button');
+    btn.innerHTML = 'Play Again';
+    btn.style.marginLeft = '100px';
+    btn.style.marginTop = '50px';
+    btn.setAttribute('onclick', 'newGame()');
+    over.appendChild(btn);
+    gameContainer.appendChild(over);
+}
 
-document.addEventListener("keypress", (event)=>{
-    var key = event.which || event.keyCode;
-    if(key==97){
-        game.moveLeft();
-    }
-    else if(key==100){
-        game.moveRight();
-    }
-});
+function startGame(){
+    document.body.removeChild(document.getElementById('startgame'));
+    game = new CarGame();
+}
 
-var score = document.getElementById('score');
-var scoreupdater = setInterval(()=>{
-    score.innerHTML = Math.floor(game.backPos);
-    SPEED += 0.03;
-},100);
+function newGame(){
+    clearTimeout(game.lane0ran);
+    clearTimeout(game.lane1ran);
+    clearTimeout(game.lane2ran);
+
+    clearInterval(game.carDestroyer);
+    for(var i=0; i<game.cars.length; i++){
+        gameContainer.removeChild(game.cars[i].car);
+    }
+    // delete(game);
+    console.log(game);
+    gameContainer.removeChild(over);
+    game = new CarGame();
+}
+
