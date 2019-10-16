@@ -1,6 +1,17 @@
 var gameContainer = document.getElementById('game-container');
 
-var carImages = ['../images/cars/taxi.png', '../images/cars/Black_viper.png', '../images/cars/Mini_truck.png', '../images/cars/Ambulance.png'];
+// var carImages = ['../images/cars/taxi.png', '../images/cars/Black_viper.png', '../images/cars/Mini_truck.png', '../images/cars/Ambulance.png'];
+var carImages = ['https://www.github.com/PaxPrz/js-assignment/blob/gh-pages/carGame/images/cars/taxi.png?raw=true',
+'https://www.github.com/PaxPrz/js-assignment/blob/gh-pages/carGame/images/cars/Black_viper.png?raw=true',
+'https://www.github.com/PaxPrz/js-assignment/blob/gh-pages/carGame/images/cars/Mini_truck.png?raw=true',
+'https://www.github.com/PaxPrz/js-assignment/blob/gh-pages/carGame/images/cars/Ambulance.png?raw=true'
+]
+
+for(var i=0; i<carImages.length; i++){
+    img = new Image();
+    img.src = carImages[i];
+}
+
 var leftLoc = ['80','200','320'];
 var counter =0;
 var SPEED = 5;
