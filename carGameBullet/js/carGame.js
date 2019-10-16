@@ -139,6 +139,13 @@ class CarGame{
         this.bulletRespwaner = null;
         this.destroyBulletIndex = -1;
 
+        this.bulletInterval = setInterval(()=>{
+            if(this.bulletCounter<MAX_BULLET){
+                this.bulletCounter++;
+                this.bulletBoard.innerText = this.bulletCounter;
+            }
+        }, 3000);
+
         document.addEventListener("keypress", (event)=>{
             var key = event.which || event.keyCode;
             if(key==97){
@@ -252,10 +259,6 @@ class CarGame{
             //     //     }
             //     // }, 3000);
             // }
-            setTimeout(()=>{
-                this.bulletCounter++;
-                this.bulletBoard.innerText = this.bulletCounter;
-            }, 3000);
             this.bulletBoard.innerText = this.bulletCounter;
         }
     }
@@ -272,6 +275,7 @@ class CarGame{
                         clearInterval(this.lane1run);
                         clearInterval(this.lane2run);
                         clearInterval(this.hitCheck);
+                        clearInterval(this.bulletInterval);
                         gameContainer.removeChild(this.mycar.car);
                         SPEED = 5;
                         if(highScore<Math.floor(game.backPos)){
