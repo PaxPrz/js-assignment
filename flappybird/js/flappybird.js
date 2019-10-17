@@ -155,5 +155,11 @@ function newGame(){
         }
     });
 
+    document.addEventListener("click", (event)=>{
+        if(!GAMEOVER){
+            jump();
+        }
+    })
+
     start();
 }
