@@ -1,0 +1,91 @@
+#homeScreen{
+    width: 200px;
+    height: 300px;
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    background-color: gray;
+    opacity: 0.4;
+    text-align: center;
+}
+
+#scoreboard{
+    opacity: 0.5px;
+    position: absolute;
+    width: 30px;
+    height: 40px;
+    left: 185px;
+    top: 50px;
+    text-align: center;
+    display:none;
+    background-color: yellow;
+    opacity: 0.6;
+}
+
+#scoreboard h1{
+    margin: 0px;
+    padding: 0px;
+}
+
+#game-container{
+    width: 400px;
+    height: 600px;
+    background-color: skyblue;
+    position: relative;
+    overflow: hidden;
+}
+
+.backgroundImg{
+    position: relative;
+    top: 300px;
+    width: 800px;
+}
+
+.platformImg{
+    width: 400px;
+    height: 200px;
+    position:relative;
+    top: 200px;
+    background: url('../images/platform.png');
+    z-index: 500;
+}
+
+.bird{
+    width: 34px;
+    height: 25px;
+    background-color: red;
+    background: url('../images/bird-sprite.png');
+    overflow: hidden;
+    position: absolute;
+    left: 100px;
+    top: 300px;
+}
+
+.pipe{
+    width: 52px;
+    height: 600px;
+    position: absolute;
+    /* overflow: hidden; */
+}
+
+.pipeDown{
+    width: 52px;
+    position: relative;
+    background: url('../images/pipe-down.png');
+}
+
+.pipeUp{
+    width: 52px;
+    position: relative;
+    background: url('../images/pipe-up.png')
+}
+
+#pipe1{
+    top: -300px;
+    left: 400px;
+}
+
+#pipe2{
+    top: -100px;
+    left: 600px;
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Flappy Bird</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    
+    <div id="game-container">
+        <img src="./images/background.png" alt="background" class="backgroundImg">
+        <div id="platformImg" class="platformImg"></div>
+        <div id="bird" class="bird"></div>
+        <div id="pipe1" class="pipe">
+            <img src="./images/pipe-down.png" alt="pipeDown" class="pipeDown">
+            <div style="width: 52px; height: 100px"></div>
+            <img src="./images/pipe-up.png" alt="pipeUp" class="pipeUp">
+        </div>
+        <div id="pipe2" class="pipe">
+            <img src="./images/pipe-down.png" alt="pipeDown" class="pipeDown">
+            <div style="width: 52px; height: 100px"></div>
+            <img src="./images/pipe-up.png" alt="pipeUp" class="pipeUp">
+        </div>
+        <!-- <img src="./images/platform.png" alt="platform" class="platformImg"> -->
+    </div>
+
+    <div id="homeScreen">
+        <h3>FLAPPY BIRD</h3>
+        <p>Space to jump</p>
+        <br/>
+        <h2>HighScore: <span id="highscore">0</span></h2>
+        <h2>Score: <span id="score">0</span></h2>
+        <br/>
+        <button onclick="newGame();">Play</button>
+    </div>
+
+    <div id="scoreboard">
+        <h1 id="scoreVal">0</h1>
+    </div>
+
+    <script src="./js/flappybird.js"></script>
+</body>
+</html>
